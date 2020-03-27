@@ -15,15 +15,17 @@ Widget build(BuildContext context){
           child:Row(
           children: <Widget>[
             Expanded(child:
-            IconButton(icon: Icon(Icons.home), 
+            IconButton(icon: Icon( Icons.home,), 
             onPressed: (){
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(builder: (context)=>HomePage()));
             }
+             
             )
+           
             ),
             Expanded(child:
-            IconButton(icon: Icon(Icons.favorite), onPressed: (){
+            IconButton(icon: Icon(Icons.favorite, color:Colors.red), onPressed: (){
                Navigator.of(context).pushReplacement(
                 MaterialPageRoute(builder: (context)=>FavPage()));
             })),
