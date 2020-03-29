@@ -25,7 +25,7 @@ Widget build(BuildContext context){
            
             ),
             Expanded(child:
-            IconButton(icon: Icon(Icons.favorite, color:Colors.red), onPressed: (){
+            IconButton(icon: Icon(Icons.favorite,), onPressed: (){
                Navigator.of(context).pushReplacement(
                 MaterialPageRoute(builder: (context)=>FavPage()));
             })),

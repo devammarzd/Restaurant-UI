@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-// import './Pages/LogIn.dart';
+import './Pages/LogIn.dart';
 import 'package:restaurant_ui/Pages/Home.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
         primaryTextTheme: TextTheme(title: TextStyle(color: Colors.black)),
         buttonColor: Colors.red,
       ),
-      home: HomePage(),
+      home: Login(),
     );
   }
 }
