@@ -16,7 +16,7 @@ class SameAppBar extends StatelessWidget {
         backgroundColor: Colors.white,
         centerTitle: true,
         title: Text(
-          'Restaurant App UI Kit',
+          'Khaana Peena',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         actions: <Widget>[
