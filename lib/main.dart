@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
         title: 'Khaana Peena',
         theme: ThemeData(
-          accentColor: Colors.green,
+          accentColor: Colors.red,
           primarySwatch: null,
           primaryTextTheme: TextTheme(title: TextStyle(color: Colors.black)),
           buttonColor: Colors.red,
