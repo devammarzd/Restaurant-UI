@@ -10,28 +10,40 @@ class FavPage extends StatelessWidget {
     List<Widget> x = List();
     return SameAppBar(
       index: 2,
-      body: ListView(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.fromLTRB(8, 8, 0, 8),
-            child: Text(
-              'Favorite Items',
-              style: TextStyle(
-                  fontSize: 23,
-                  color: Colors.black,
-                  fontWeight: FontWeight.w800),
+      body: Padding(
+        padding: const EdgeInsets.all(5.0),
+        child: ListView(
+          children: <Widget>[
+           Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 10, 00, 10),
+                    child: Container(
+                      child: Text(
+                        'Favourite Items',
+                        style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Divider(
+                color: Colors.red,
+                //  height: 5,
+                thickness: 3,
+              ),
+            StreamBuilder<QuerySnapshot>(
+              stream: Firestore.instance.collection('favourites').snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) return LinearProgressIndicator();
+                else{
+                return _buildGridView(context, snapshot.data.documents, x);
+              }
+              },
             ),
-          ),
-          StreamBuilder<QuerySnapshot>(
-            stream: Firestore.instance.collection('favourites').snapshots(),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) return LinearProgressIndicator();
-              else{
-              return _buildGridView(context, snapshot.data.documents, x);
-            }
-            },
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -125,7 +137,7 @@ if(i<=rating){
     return GridView.count(
       shrinkWrap: true,
       primary: false,
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.only(top:8.0),
       crossAxisSpacing: 8,
       childAspectRatio: MediaQuery.of(context).size.width /
           (MediaQuery.of(context).size.height / 1.25),

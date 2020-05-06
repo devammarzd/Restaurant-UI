@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:restaurant_ui/Services/auth.dart';
 import 'package:restaurant_ui/Widgets/Custom_Scaffold.dart';
 import 'package:restaurant_ui/Widgets/CircularButton.dart';
 import 'package:restaurant_ui/Widgets/CategorySlider.dart';
 
 class HomePage extends StatelessWidget {
+  final AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {
     List<Widget> x = List();

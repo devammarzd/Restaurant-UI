@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant_ui/Services/auth.dart';
 import './LogIn_SignIn.dart' as signin;
 import './LogIn_Register.dart' as register;
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
+  @override
+  _LoginState createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
+    return  DefaultTabController(
       length: 2,
       child: Scaffold(
         appBar: AppBar(
@@ -33,3 +39,4 @@ class Login extends StatelessWidget {
     );
   }
 }
+
