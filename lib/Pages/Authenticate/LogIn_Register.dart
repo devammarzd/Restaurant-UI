@@ -98,13 +98,14 @@ class _RegisterState extends State<Register> {
         Padding(
           padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
           child: RaisedButton(
+            color: Colors.red[800],
             onPressed: () async {
               if (_formkey.currentState.validate()) {
                 setState(() {
                   loading=true;
                 });
                 dynamic result =
-                    await _auth.registerWithEmailandPassword(email, password);
+                    await _auth.registerWithEmailandPassword(username, email, password);
                 if (result == null) {
                   setState(() {
                     loading=false;
@@ -114,32 +115,10 @@ class _RegisterState extends State<Register> {
               }
             },
             padding: EdgeInsets.all(20.0),
-            child: Text('REGISTER', style: TextStyle(color: Colors.white)),
+            elevation: 5,
+                  child: Text('Register', style: TextStyle(color: Colors.white, fontSize: 16)),
           ),
         ),
-        Padding(
-            padding: EdgeInsets.fromLTRB(120, 20, 120, 0),
-            child: Container(
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                  FloatingActionButton(
-                      heroTag: '4',
-                      backgroundColor: Colors.blue,
-                      onPressed: () {},
-                      child: CircleAvatar(
-                          backgroundImage: NetworkImage(
-                              'https://upload.wikimedia.org/wikipedia/en/thumb/5/54/Google_Now_logo.webp/300px-Google_Now_logo.webp.png'))),
-                  FloatingActionButton(
-                    heroTag: '3',
-                    backgroundColor: Colors.blue[800],
-                    onPressed: () {},
-                    child: CircleAvatar(
-                      backgroundImage: NetworkImage(
-                          'https://cdn4.iconfinder.com/data/icons/social-messaging-ui-color-shapes-2-free/128/social-facebook-circle-256.png'),
-                    ),
-                  ),
-                ]))),
         SizedBox(
           height: 15,
         ),

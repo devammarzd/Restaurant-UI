@@ -1,9 +1,11 @@
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:restaurant_ui/Pages/Authenticate/LogIn.dart';
 import 'package:restaurant_ui/Services/auth.dart';
 import 'package:restaurant_ui/Widgets/Custom_Scaffold.dart';
 import 'package:restaurant_ui/Wrapper.dart';
+import 'package:restaurant_ui/models/User.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -12,148 +14,181 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   final AuthService _auth = AuthService();
+  String email;
+  String useruid;
+  String name;
+
+  List<String> litems = [
+    "Username",
+    "Email",
+    "Phone",
+    "Address",
+    "Gender",
+    "Date of Birth"
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return SameAppBar(
-      index: 4,
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ListView(
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 10, 00, 10),
-                  child: Container(
-                    child: Text(
-                      'Profile',
-                      style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Divider(
-              color: Colors.red,
-              //  height: 5,
-              thickness: 3,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  color: Colors.yellow,
-                  // padding: EdgeInsets.only(right: 20),
-                  height: 100,
-                  width: 100,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Text('Account Name',
-                          style: TextStyle(
-                              fontSize: 23, fontWeight: FontWeight.bold)),
-                      Text('123@xyz.com',
-                          style: TextStyle(
-                            fontSize: 20,
-                          )),
-                      SizedBox(height: 10),
-                      OutlineButton(
-                        textColor: Colors.red,
-                          color: Colors.red,
-                          onPressed: () async {
-                            await _auth.logOut();
-                            Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                    builder: (context) => Wrapper()));
-                          },
-                          child: Text('LogOut',
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.bold))),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            Divider(),
-            ListTile(
-              title: Text(
-                'Account Information',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              subtitle: Text('Ammar Zahid'),
-              trailing: Icon(Icons.edit),
-            ),
-            ListTile(
-              title: Text(
-                'Email',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              subtitle: Text('123@xyz.com'),
-            ),
-            ListTile(
-              title: Text(
-                'Phone Number',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              subtitle: Text('+92XXXXXXXXX'),
-            ),
-            ListTile(
-              title: Text(
-                'Address',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              subtitle: Text('22 street,dash Town, Pakistan'),
-            ),
-            ListTile(
-              title: Text(
-                'Gender',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              subtitle: Text('Male'),
-            ),
-            ListTile(
-              title: Text(
-                'Date Of Birth',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              subtitle: Text('DD-MM-YY'),
-            ),
-            ListTile(
-                title: Text(
-                  'Dark Theme',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                trailing: Switch(
-                  value: false,
-                  onChanged: null,
-                ))
-          ],
-        ),
-      ),
+    final user = Provider.of<User>(context);
+    if (user != null) {
+      setState(() {
+        print(user.email);
+        useruid = user.uid;
+        email = user.email;
+      });
 
-      // Column(
-      //   crossAxisAlignment: CrossAxisAlignment.center,
-      //   mainAxisAlignment: MainAxisAlignment.center,
-      //   children: <Widget>[
-      //     SizedBox(
-      //       height: 30,
-      //     ),
-      //     RaisedButton(
-      //       onPressed: () async {
-      //         await _auth.logOut();
-      //      Navigator.of(context).pushReplacement(
-      //           MaterialPageRoute(builder: (context) => Wrapper()));
-      //       },
-      //       child: Text('Logout'),
-      //       color: Colors.red[200],
-      //     )
-      //   ],
-      // ),
-    );
+      // Future<dynamic> getData() async {
+      //   var document = Firestore.instance.collection("Users").document(user.uid);
+
+      //   await document.get().then((document) async {
+      //     setState(() {
+      //       name = document.data['Username'];
+      //     });
+      //   }).whenComplete(() => print("Succesfull"));
+      // }
+
+      return SameAppBar(
+        index: 4,
+        body: Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: Container(
+            child: StreamBuilder(
+                stream: Firestore.instance
+                    .collection('Users')
+                    .document(useruid)
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  var userdocument = snapshot.data;
+                 
+                  if (snapshot.hasData) {
+                     String profpicurl = userdocument['Photourl'];
+                  print(profpicurl);
+                    return SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: Column(
+                        children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 10, 00, 10),
+                                child: Container(
+                                  child: Text(
+                                    'Profile',
+                                    style: TextStyle(
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Divider(
+                            color: Colors.red,
+                            thickness: 3,
+                          ),
+                          Card(
+                            elevation: 3,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                SizedBox(width: 5),
+                                Container(
+                                  height: 100,
+                                  width: 100,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      image: DecorationImage(
+                                          image: NetworkImage('$profpicurl'),
+                                          fit: BoxFit.cover)),
+                                ),
+                                // Container(
+                                //   color: Colors.yellow,
+                                //   height: 100,
+                                //   width: 100,
+                                // ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(userdocument['Username'],
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold)),
+                                      Text(email,
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                          )),
+                                      SizedBox(height: 10),
+                                      RaisedButton(
+                                          elevation: 8,
+                                          textColor: Colors.white,
+                                          color: Colors.red,
+                                          onPressed: () async {
+                                            await _auth.gsignOut().whenComplete(
+                                                () => Navigator.of(context)
+                                                    .pushReplacement(
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                Wrapper())));
+                                          },
+                                          child: Text('SIGN OUT',
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold))),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Divider(),
+                          Container(
+                            child: ListView.builder(
+                                physics: ScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: litems.length,
+                                itemBuilder: (BuildContext ctxt, int index) {
+                                  var userDocument = snapshot.data;
+                                  String i = litems[index];
+
+                                  return ListTile(
+                                    title: Text(
+                                      litems[index],
+                                      style:
+                                          TextStyle(fontWeight: FontWeight.bold),
+                                    ),
+                                    subtitle: Text(userDocument[i]),
+                                  );
+                                }),
+                          ),
+                          ListTile(
+                              title: Text(
+                                'Dark Theme',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              trailing: Switch(
+                                value: false,
+                                onChanged: null,
+                              ))
+                        ],
+                      ),
+                    );
+                  } else {
+                    return Container();
+                  }
+                }),
+          ),
+        ),
+      );
+    } else {
+      return SameAppBar(
+          index: 4,
+          body: Center(
+              child: Container(
+            child: Text('Loading...'),
+          )));
+    }
   }
 }

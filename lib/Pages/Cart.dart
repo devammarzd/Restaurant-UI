@@ -8,7 +8,7 @@ class CartPage extends StatelessWidget {
     return SameAppBar(
         index: 3,
         body: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(5.0),
           child: ListView(
             children: <Widget>[
                 Row(
