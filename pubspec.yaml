@@ -29,11 +29,20 @@ dependencies:
   provider: ^4.0.5
   flutter_spinkit: "^4.1.2"
   google_sign_in: ^4.4.4
+  flutter_launcher_icons: ^0.7.5
+  flutter_launcher_name: ^0.0.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+flutter_icons:
+ android: "launcher_icon"
+ ios: true
+ image_path: "assets/Launchicon.png" 
+
+flutter_launcher_name:
+  name: "Khana Peena"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

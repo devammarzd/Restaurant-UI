@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:restaurant_ui/Pages/Home.dart';
 import 'package:restaurant_ui/Services/auth.dart';
@@ -103,16 +102,46 @@ class _SignInState extends State<SignIn> {
                           loading = false;
                           error = 'Cannot Sign in with those credentials';
                         });
+                        showDialog(
+                            context: context,
+                            builder: (_) {
+                              return AlertDialog(
+                                contentPadding: EdgeInsets.all(30),
+                                elevation: 4.0,
+                                title: Text('Signin Failed !'),
+                                content: Row(
+                                  children: <Widget>[
+                                    Text(
+                                      'ERROR : ',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    SizedBox(
+                                        width: 180,
+                                        height: 40,
+                                        child: Text(error))
+                                  ],
+                                ),
+                                actions: <Widget>[
+                                  FlatButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text('OK'))
+                                ],
+                              );
+                            });
                       }
                     }
                   },
                   padding: EdgeInsets.all(20.0),
                   elevation: 5,
-                  child: Text('Login', style: TextStyle(color: Colors.white, fontSize: 16)),
+                  child: Text('Login',
+                      style: TextStyle(color: Colors.white, fontSize: 16)),
                 ),
               ),
               Padding(
-                 padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
+                padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
                 child: RaisedButton(
                   elevation: 5,
                   color: Colors.green,
@@ -124,16 +153,14 @@ class _SignInState extends State<SignIn> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text('Sign in with Google',
-                            style: TextStyle(color: Colors.black, fontSize: 16))
+                          style: TextStyle(color: Colors.black, fontSize: 16))
                     ],
                   ),
                 ),
               ),
-             
               SizedBox(
                 height: 15,
               ),
-              Text(error)
             ]),
           ));
   }

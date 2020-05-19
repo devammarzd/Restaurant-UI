@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_ui/Services/auth.dart';
+import 'package:restaurant_ui/SplashScreen.dart';
 import 'package:restaurant_ui/Wrapper.dart';
 
 import 'package:restaurant_ui/Pages/Home.dart';
@@ -14,14 +15,14 @@ class MyApp extends StatelessWidget {
       value: AuthService().user,
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
-        title: 'Khaana Peena',
+        title: 'Khana Peena',
         theme: ThemeData(
           accentColor: Colors.red,
           primarySwatch: null,
           primaryTextTheme: TextTheme(title: TextStyle(color: Colors.black)),
           buttonColor: Colors.red,
         ),
-        home: Wrapper(),
+        home: Splash(),
       ),
     );
   }
